@@ -1,23 +1,83 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useState, useEffect} from 'react'
+import { Link, Route, useParams } from 'react-router-dom';
+// import './css/reset.css';
+import axios from 'axios';
+
+function SetUser(){
+  const [username, setUsername] = useState()
+  const [gender, setGender] = useState()
+  
+  return(
+    <>
+    <h1>직업가치관검사</h1>
+    <form>
+      이름: <input type="text" id="username" value={username}/>
+      <br/>
+      성별<br/>
+      <input type="radio" id="male" name="gender" value={gender}></input>
+      <label for="male">남자</label>
+      <br/>
+      <input type="radio" id="female" name="gender" value={gender}></input>
+      <label for="female">여자</label>
+      <br/>
+      <button type="button">검사 시작</button>
+    </form>
+    </>
+  )
+}
+
+function TestExample(){
+  return(
+    <>
+    </>
+  )
+}
+
+function Test(){
+  const [saveData, setSaveData] = useState()
+  const [countPer, setCountPer] = useState(0)
+
+  useEffect(() => {
+    async function loadQuestion(){
+      try{
+        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${key}&q=25`)
+        setSaveData(response.data.RESULT)
+        console.log(saveData)
+      } catch(e){
+        console.log('에러 발생')
+      }
+    }
+    loadQuestion();
+  }, []);
+
+  return(
+    <>
+    <h2>검사 진행</h2>
+    <h3>{countPer}%</h3>
+    <h3>{saveData[0].qitemNo}. {saveData[0].question}</h3>
+    <input type="radio" name="answer" value="answer"></input>
+    <label for="answer">{saveData[0].answer01}</label>
+    <br/>
+    </>
+  )
+}
 
 function App() {
+  
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Route exact path='/'>
+       <SetUser></SetUser>
+      </Route>
+      <Route path='/testExample'>
+        <TestExample></TestExample>
+      </Route>
+      <Route path='/test'>
+        <Test></Test>
+      </Route>
+      <Route path='/finishTest'></Route>
+      <Route path='/result'></Route>
     </div>
   );
 }
