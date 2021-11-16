@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { Link, Route, useParams } from 'react-router-dom';
 // import './css/reset.css';
 import axios from 'axios';
+const key = '43c8e52955dbc4c8d2b69e98c6d641f2';
 
 function SetUser(){
   const [username, setUsername] = useState()
@@ -26,12 +27,16 @@ function SetUser(){
   )
 }
 
+
+
 function TestExample(){
   return(
     <>
     </>
   )
 }
+
+
 
 function Test(){
   const [saveData, setSaveData] = useState()
@@ -50,17 +55,21 @@ function Test(){
     loadQuestion();
   }, []);
 
-  return(
-    <>
+  
+  
+  return (
+  <>
     <h2>검사 진행</h2>
     <h3>{countPer}%</h3>
+    { saveData && saveData.length > 0 ?
+    (<>
     <h3>{saveData[0].qitemNo}. {saveData[0].question}</h3>
     <input type="radio" name="answer" value="answer"></input>
     <label for="answer">{saveData[0].answer01}</label>
+    </>) : undefined }
     <br/>
-    </>
-  )
-}
+  </>
+)}
 
 function App() {
   
