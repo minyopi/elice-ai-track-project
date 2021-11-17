@@ -7,8 +7,6 @@ import { TestExample } from './components/TestExample';
 import { SetUser } from './components/SetUser';
 import { Test } from './components/Test';
 
-export const key = '43c8e52955dbc4c8d2b69e98c6d641f2';
-
 
 function App() {
   

@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { UserContext } from "../store/user";
 
+const StyledLink = styled(Link)`
+    opacity: ${(props) => (props.isActive ? "1" : "0.6")};
+    cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+  `;
+
 export function SetUser() {
   const [username, setUsername] = useState();
   const [gender, setGender] = useState();
@@ -24,12 +29,6 @@ export function SetUser() {
     if (username !== undefined && gender !== undefined) setIsActive(true)
     else setIsActive(false)
   }, [username, gender])
-
-  const StyledLink = styled(Link)`
-    opacity: ${(props) => (props.isActive ? "1" : "0.6")};
-    cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
-  `;
-
 
   return (
     <>

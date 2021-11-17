@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { key } from '../App';
+import { key } from '../key';
 
 export function Test() {
   const [saveData, setSaveData] = useState([]);
-  const [countPer, setCountPer] = useState(0);
 
   useEffect(() => {
     async function loadQuestion() {
@@ -44,7 +43,7 @@ export function Test() {
   return (
     <>
       <h2>검사 진행</h2>
-      <h3>{countPer}%</h3>
+      <h3>0%</h3>
       {saveData && saveData.length > 0 ? questions : undefined}
       <br />
     </>
