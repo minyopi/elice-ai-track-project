@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { Link, Route, useParams } from 'react-router-dom';
+import styled from 'styled-components';
 // import './css/reset.css';
 import './css/app.css';
 import axios from 'axios';
@@ -9,15 +10,24 @@ const key = '43c8e52955dbc4c8d2b69e98c6d641f2';
 function SetUser(){
   const [username, setUsername] = useState()
   const [gender, setGender] = useState()
+  const [isActive, setIsActive] = useState(true)
+
+  let userInfo = {
+    name : username,
+    gender : gender,
+  }
+
   const handleUsername = (e) => {
     setUsername(e.target.value);
   }
   const getGender = (e) => {
     setGender(e.target.value);
-    console.log(gender)
   }
 
-  //버튼은 className={isActive ? "activebtn" : "unactivebtn"} 으로 활성화
+  const StyledLink = styled(Link)`
+    opacity: ${(props) => (props.isActive ? "1" : "0.6")};
+    cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+  `;
 
   return(
     <>
@@ -37,7 +47,11 @@ function SetUser(){
       <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
       <label for="female">여자</label>
       <br/>
-      <button type="button"><Link to='/testExample'>검사 시작</Link></button>
+      <button className={isActive ? "activeBtn" : "disabledBtn"}>
+        { !isActive ?
+        <StyledLink to='/testExample' isActive={isActive} onClick={(e)=>{e.preventDefault()}}>검사 시작</StyledLink> 
+        : <StyledLink to='/testExample' isActive={isActive}>검사 시작</StyledLink> }
+      </button>
     </form>
     </>
   )
@@ -84,19 +98,19 @@ function Test(){
     loadQuestion();
   }, []);
 
-  const questions = saveData.map((item) => {
+  const questions = saveData.map((item, idx) => {
     return(<>
       <h3>{item.qitemNo}. {item.question}</h3>
-      <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">{item.answer01}</label>
-      <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">{item.answer02}</label>
-      <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">{item.answer03}</label>
-      <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">{item.answer04}</label>
-      <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">{item.answer05}</label>
+      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
+      <label for={"answer"+String(idx+1)}>{item.answer01}</label>
+      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
+      <label for={"answer"+String(idx+1)}>{item.answer02}</label>
+      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
+      <label for={"answer"+String(idx+1)}>{item.answer03}</label>
+      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
+      <label for={"answer"+String(idx+1)}>{item.answer04}</label>
+      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
+      <label for={"answer"+String(idx+1)}>{item.answer05}</label>
       </>)
   });
   
