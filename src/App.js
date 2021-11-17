@@ -1,21 +1,23 @@
-import React, {useState, useEffect} from 'react'
+import React, { useContext, useState, useEffect} from 'react'
 import { Link, Route, useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import UserStore, { UserContext } from "./store/user";
 // import './css/reset.css';
 import './css/app.css';
 import axios from 'axios';
 
 const key = '43c8e52955dbc4c8d2b69e98c6d641f2';
 
+
 function SetUser(){
   const [username, setUsername] = useState()
   const [gender, setGender] = useState()
   const [isActive, setIsActive] = useState(true)
 
-  let userInfo = {
-    name : username,
-    gender : gender,
-  }
+  //  context를 사용하고 싶을때는 이렇게
+  const context = useContext(UserContext);
+  console.log(context.name);
+  console.log(context.name);
 
   const handleUsername = (e) => {
     setUsername(e.target.value);
@@ -28,6 +30,7 @@ function SetUser(){
     opacity: ${(props) => (props.isActive ? "1" : "0.6")};
     cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
   `;
+
 
   return(
     <>
@@ -88,9 +91,12 @@ function Test(){
   useEffect(() => {
     async function loadQuestion(){
       try{
-        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${key}&q=25`)
-        setSaveData(response.data.RESULT)
-        console.log(saveData)
+        var config = {
+            headers: {'Access-Control-Allow-Origin': '*'}
+        };
+        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${key}&q=25`,config)
+        setSaveData(response.data.RESULT);
+        console.log(saveData);
       } catch(e){
         console.log('에러 발생')
       }
@@ -98,19 +104,22 @@ function Test(){
     loadQuestion();
   }, []);
 
+
   const questions = saveData.map((item, idx) => {
     return(<>
       <h3>{item.qitemNo}. {item.question}</h3>
-      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
-      <label for={"answer"+String(idx+1)}>{item.answer01}</label>
-      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
-      <label for={"answer"+String(idx+1)}>{item.answer02}</label>
-      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
-      <label for={"answer"+String(idx+1)}>{item.answer03}</label>
-      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
-      <label for={"answer"+String(idx+1)}>{item.answer04}</label>
-      <input type="radio" name={"answer"+String(idx+1)} value="answer"></input>
-      <label for={"answer"+String(idx+1)}>{item.answer05}</label>
+      <form>
+        <input type="radio" id={"answer"+String(idx+1)+"-1"} name={"answer"+String(idx+1)} value="1"></input>
+        <label for={"answer"+String(idx+1)+"-1"}>{item.answer01}</label>
+        <input type="radio" id={"answer"+String(idx+1)+"-2"} name={"answer"+String(idx+1)} value="2"></input>
+        <label for={"answer"+String(idx+1)+"-2"}>{item.answer02}</label>
+        <input type="radio" id={"answer"+String(idx+1)+"-3"}name={"answer"+String(idx+1)} value="3"></input>
+        <label for={"answer"+String(idx+1)+"-3"}>{item.answer03}</label>
+        <input type="radio" id={"answer"+String(idx+1)+"-4"} name={"answer"+String(idx+1)} value="4"></input>
+        <label for={"answer"+String(idx+1)+"-4"}>{item.answer04}</label>
+        <input type="radio" id={"answer"+String(idx+1)+"-5"} name={"answer"+String(idx+1)} value="5"></input>
+        <label for={"answer"+String(idx+1)+"-5"}>{item.answer05}</label>
+      </form>
       </>)
   });
   
@@ -127,19 +136,21 @@ function App() {
   
   
   return (
-    <div className="App">
-      <Route exact path='/'>
-       <SetUser></SetUser>
-      </Route>
-      <Route path='/testExample'>
-        <TestExample></TestExample>
-      </Route>
-      <Route path='/test'>
-        <Test></Test>
-      </Route>
-      <Route path='/finishTest'></Route>
-      <Route path='/result'></Route>
-    </div>
+    <UserStore>
+      <div className="App">
+        <Route exact path='/'>
+         <SetUser></SetUser>
+        </Route>
+        <Route path='/testExample'>
+          <TestExample></TestExample>
+        </Route>
+        <Route path='/test'>
+          <Test></Test>
+        </Route>
+        <Route path='/finishTest'></Route>
+        <Route path='/result'></Route>
+      </div>
+    </UserStore>
   );
 }
 
