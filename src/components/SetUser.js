@@ -42,10 +42,10 @@ export function SetUser() {
         <br />
       성별<br />
         <input type="radio" id="male" name="gender" value="male" onClick={getGender} />
-        <label for="male">남자</label>
+        <label htmlFor="male">남자</label>
         <br />
         <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
-        <label for="female">여자</label>
+        <label htmlFor="female">여자</label>
       <br />
       <button className={isActive ? "activeBtn" : "disabledBtn"}>
         {!isActive ?

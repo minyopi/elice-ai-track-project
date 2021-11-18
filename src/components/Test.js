@@ -3,31 +3,11 @@ import axios from 'axios';
 import { key } from '../key';
 import { useParams, Link } from 'react-router-dom';
 
-// 문항 만드는 템플릿 컴포넌트
-function Question(props){
-  return(
-    <>
-      <h3>{props.item.qitemNo}. {props.item.question}</h3>
-      <form>
-        <input type="radio" id={"answer" + String(props.idx + 1) + "-1"} name={"answer" + String(props.idx + 1)} value="1"></input>
-        <label htmlFor={"answer" + String(props.idx + 1) + "-1"}>{props.item.answer01}</label>
-        <input type="radio" id={"answer" + String(props.idx + 1) + "-2"} name={"answer" + String(props.idx + 1)} value="2"></input>
-        <label htmlFor={"answer" + String(props.idx + 1) + "-2"}>{props.item.answer02}</label>
-        <input type="radio" id={"answer" + String(props.idx + 1) + "-3"} name={"answer" + String(props.idx + 1)} value="3"></input>
-        <label htmlFor={"answer" + String(props.idx + 1) + "-3"}>{props.item.answer03}</label>
-        <input type="radio" id={"answer" + String(props.idx + 1) + "-4"} name={"answer" + String(props.idx + 1)} value="4"></input>
-        <label htmlFor={"answer" + String(props.idx + 1) + "-4"}>{props.item.answer04}</label>
-        <input type="radio" id={"answer" + String(props.idx + 1) + "-5"} name={"answer" + String(props.idx + 1)} value="5"></input>
-        <label htmlFor={"answer" + String(props.idx + 1) + "-5"}>{props.item.answer05}</label>
-      </form>
-    </>
-  )
-}
 
-export function Test() {
+export function Test(props) {
   // 문항 불러와서 saveData에 저장하기
   const [saveData, setSaveData] = useState([]);
-
+  
   useEffect(() => {
     async function loadQuestion() {
       try {
@@ -36,7 +16,7 @@ export function Test() {
         };
         const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${key}&q=25`, config);
         setSaveData(response.data['RESULT']);
-        console.log(saveData);
+        console.log("saveData =",saveData);
       } catch (e) {
         console.log('에러 발생');
       }
@@ -44,6 +24,47 @@ export function Test() {
     loadQuestion();
   }, []);
   
+
+  // radio 값 저장하기
+  // const answer_initialValue = [];
+  // for (let i = 1; i < saveData.length; i++){
+  //   answer_initialValue.push({question_no: i, answer: "", isDone: false})
+  // }
+  
+  // const [answer, setAnswer] = useState("");
+  // const [answers, setAnswers] = useState(answer_initialValue);
+  // function getAnswer(e){
+  //   setAnswer(e.target.value);
+  //   console.log(answer)
+  // }
+
+
+  const [inputStatus, setInputStatus] = useState('');
+  function handleRadio(){
+
+  }
+
+  // 문항 만드는 템플릿 컴포넌트
+  function Question(props){
+    return(
+      <>
+        <h3>{props.item.qitemNo}. {props.item.question}</h3>
+        <form>
+          <input type="radio" id={"answer" + String(props.idx + 1) + "-1"} name={"answer" + String(props.idx + 1)} value="1" checked={inputStatus} onChange={handleRadio} ></input>
+          <label htmlFor={"answer" + String(props.idx + 1) + "-1"}>{props.item.answer01}</label>
+          <input type="radio" id={"answer" + String(props.idx + 1) + "-2"} name={"answer" + String(props.idx + 1)} value="2" checked={inputStatus} onChange={handleRadio}></input>
+          <label htmlFor={"answer" + String(props.idx + 1) + "-2"}>{props.item.answer02}</label>
+          <input type="radio" id={"answer" + String(props.idx + 1) + "-3"} name={"answer" + String(props.idx + 1)} value="3" checked={inputStatus} onChange={handleRadio}></input>
+          <label htmlFor={"answer" + String(props.idx + 1) + "-3"}>{props.item.answer03}</label>
+          <input type="radio" id={"answer" + String(props.idx + 1) + "-4"} name={"answer" + String(props.idx + 1)} value="4" checked={inputStatus} onChange={handleRadio}></input>
+          <label htmlFor={"answer" + String(props.idx + 1) + "-4"}>{props.item.answer04}</label>
+          <input type="radio" id={"answer" + String(props.idx + 1) + "-5"} name={"answer" + String(props.idx + 1)} value="5" checked={inputStatus} onChange={handleRadio}></input>
+          <label htmlFor={"answer" + String(props.idx + 1) + "-5"}>{props.item.answer05}</label>
+        </form>
+      </>
+    )
+  }
+
 
   // useParams 사용해서 5문항씩 페이지 나눠주기
   const params = useParams();
@@ -59,30 +80,33 @@ export function Test() {
     }
   });
 
-    // 이전, 다음 버튼 설정해주는 컴포넌트
-    function SetButton(){
-      let page_num = Number(page)
-      if ( page_num === 1 ){
-        return(
-          <>
-          <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>      
-          </>
-          )
-        } else if (page_num === 10){
-          return(
-            <>
-            <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
-            <Link to={'/finishTest'}><button>완료</button></Link>
-            </>
-          )
-        }
+  
+
+  // 이전, 다음 버튼 설정해주는 컴포넌트
+  function SetButton(){
+    let page_num = Number(page)
+    if ( page_num === 1 ){
       return(
         <>
-          <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
-          <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>
+        <Link to={'/testExample'}><button>이전</button></Link>
+        <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>      
         </>
-      )
-    }
+        )
+      } else if (page_num === 10){
+        return(
+          <>
+          <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
+          <Link to={'/finishTest'}><button>완료</button></Link>
+          </>
+        )
+      }
+    return(
+      <>
+        <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
+        <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>
+      </>
+    )
+  }
 
   return (
     <>

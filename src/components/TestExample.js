@@ -12,9 +12,9 @@ export function TestExample() {
     </p>
       <h3>두개 가치 중에 자신에게 더 중요한 가치를 선택하세요.</h3>
       <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">능력발휘</label>
+      <label htmlFor="answer">능력발휘</label>
       <input type="radio" name="answer" value="answer"></input>
-      <label for="answer">자율성</label>
+      <label htmlFor="answer">자율성</label>
       <br />
       <button type="button"><Link to='/test/1'>검사시작</Link></button>
     </>
