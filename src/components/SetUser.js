@@ -26,7 +26,7 @@ export function SetUser() {
   };
 
   useEffect(() => {
-    if (username !== undefined && gender !== undefined) setIsActive(true)
+    if ( username !== "" && username !== undefined && gender !== undefined) setIsActive(true)
     else setIsActive(false)
   }, [username, gender])
 

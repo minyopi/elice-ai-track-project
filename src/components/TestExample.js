@@ -16,7 +16,7 @@ export function TestExample() {
       <input type="radio" name="answer" value="answer"></input>
       <label for="answer">자율성</label>
       <br />
-      <button type="button"><Link to='/test'>검사시작</Link></button>
+      <button type="button"><Link to='/test/1'>검사시작</Link></button>
     </>
   );
 }
