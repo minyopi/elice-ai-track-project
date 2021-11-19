@@ -23,45 +23,37 @@ export function Test(props) {
     }
     loadQuestion();
   }, []);
-  
 
-  // radio 값 저장하기
-  // const answer_initialValue = [];
-  // for (let i = 1; i < saveData.length; i++){
-  //   answer_initialValue.push({question_no: i, answer: "", isDone: false})
+
+  // 선택한 input 값 받아오기
+  // const inputsInitial = {}
+  // for (let i = 1; i < saveData.length+1; i++){
+  //   inputsInitial[`${i}`] = "";
   // }
-  
-  // const [answer, setAnswer] = useState("");
-  // const [answers, setAnswers] = useState(answer_initialValue);
-  // function getAnswer(e){
-  //   setAnswer(e.target.value);
-  //   console.log(answer)
-  // }
-
-
-  const [inputStatus, setInputStatus] = useState('');
-  function handleRadio(){
-
+  const [inputs, setInputs] = useState({});
+  function handleChange(e){
+    const { value, name } = e.target;
+    setInputs((cur) => {
+      let newSetInputs = {...cur};
+      newSetInputs[name]= value;
+      return newSetInputs;
+    });
   }
+  console.log("inputs=",inputs)
 
   // 문항 만드는 템플릿 컴포넌트
   function Question(props){
     return(
       <>
-        <h3>{props.item.qitemNo}. {props.item.question}</h3>
-        <form>
-          <input type="radio" id={"answer" + String(props.idx + 1) + "-1"} name={"answer" + String(props.idx + 1)} value="1" checked={inputStatus} onChange={handleRadio} ></input>
-          <label htmlFor={"answer" + String(props.idx + 1) + "-1"}>{props.item.answer01}</label>
-          <input type="radio" id={"answer" + String(props.idx + 1) + "-2"} name={"answer" + String(props.idx + 1)} value="2" checked={inputStatus} onChange={handleRadio}></input>
-          <label htmlFor={"answer" + String(props.idx + 1) + "-2"}>{props.item.answer02}</label>
-          <input type="radio" id={"answer" + String(props.idx + 1) + "-3"} name={"answer" + String(props.idx + 1)} value="3" checked={inputStatus} onChange={handleRadio}></input>
-          <label htmlFor={"answer" + String(props.idx + 1) + "-3"}>{props.item.answer03}</label>
-          <input type="radio" id={"answer" + String(props.idx + 1) + "-4"} name={"answer" + String(props.idx + 1)} value="4" checked={inputStatus} onChange={handleRadio}></input>
-          <label htmlFor={"answer" + String(props.idx + 1) + "-4"}>{props.item.answer04}</label>
-          <input type="radio" id={"answer" + String(props.idx + 1) + "-5"} name={"answer" + String(props.idx + 1)} value="5" checked={inputStatus} onChange={handleRadio}></input>
-          <label htmlFor={"answer" + String(props.idx + 1) + "-5"}>{props.item.answer05}</label>
-        </form>
-      </>
+        <div>
+          <h3>{props.item.qitemNo}. {props.item.question}</h3>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="1" />{props.item.answer01}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="2" />{props.item.answer02}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="3" />{props.item.answer03}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="4" />{props.item.answer04}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="5" />{props.item.answer05}</label>
+        </div>
+    </>
     )
   }
 
@@ -76,7 +68,7 @@ export function Test(props) {
     question_count += 1;
     if(question_count % 5 === 0) page_count += 1;
     if (page === page_count){
-      return <Question item={item} idx={idx+1} key={idx+1} ></Question>;
+      return <Question item={item} idx={idx} key={idx+1} ></Question>;
     }
   });
 

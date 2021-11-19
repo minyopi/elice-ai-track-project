@@ -30,6 +30,10 @@ export function SetUser() {
     else setIsActive(false)
   }, [username, gender])
 
+  function IsActiveBtn(props){
+    return <button className={isActive ? "activeBtn" : "disabledBtn"}>{props.name}</button>
+  }
+
   return (
     <>
       <h1>직업가치관검사</h1>
@@ -47,11 +51,9 @@ export function SetUser() {
         <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
         <label htmlFor="female">여자</label>
       <br />
-      <button className={isActive ? "activeBtn" : "disabledBtn"}>
-        {!isActive ?
-          <StyledLink to='/testExample' isActive={isActive} onClick={(e) => { e.preventDefault(); }}>검사 시작</StyledLink>
-          : <StyledLink to='/testExample' isActive={isActive}>검사 시작</StyledLink>}
-      </button>
+      {!isActive ?
+        <StyledLink to='/testExample' isActive={isActive} onClick={(e) => { e.preventDefault(); }}><IsActiveBtn name="검사 시작" /></StyledLink>
+        : <StyledLink to='/testExample' isActive={isActive}><IsActiveBtn name="검사 시작" /></StyledLink>}
       </form>
     </>
   );
