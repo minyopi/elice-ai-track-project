@@ -1,11 +1,14 @@
 import React, {useState} from 'react'
 import { Route } from 'react-router-dom';
 import UserStore from "./store/user";
-// import './css/reset.css';
+import './css/reset.css';
+import './css/setUsers.css'
 import './css/app.css';
 import { TestExample } from './components/TestExample';
 import { SetUser } from './components/SetUser';
 import { Test } from './components/Test';
+import { FinishTest } from './components/FinishTest';
+import { Result } from './components/Result';
 
 
 class ErrorBoundary extends React.Component {
@@ -38,7 +41,6 @@ class ErrorBoundary extends React.Component {
   }
 }
 
-
 function App() {
   
   return (
@@ -54,8 +56,12 @@ function App() {
           <Route path='/test/:page'>
             <Test></Test>
           </Route>
-          <Route path='/finishTest'></Route>
-          <Route path='/result'></Route>
+          <Route path='/finishTest'>
+            <FinishTest></FinishTest>
+          </Route>
+          <Route path='/result'>
+            <Result></Result>
+          </Route>
         </UserStore>
       </ErrorBoundary>
     </div>

@@ -31,30 +31,43 @@ export function SetUser() {
   }, [username, gender])
 
   function IsActiveBtn(props){
-    return <button className={isActive ? "activeBtn" : "disabledBtn"}>{props.name}</button>
+    return <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>{props.name}</button>
   }
 
   return (
     <>
-      <h1>직업가치관검사</h1>
-      <form type="submit">
-        이름: <input
-          type="text"
-          id="username"
-          value={username}
-          onChange={handleUsername} />
-        <br />
-      성별<br />
-        <input type="radio" id="male" name="gender" value="male" onClick={getGender} />
-        <label htmlFor="male">남자</label>
-        <br />
-        <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
-        <label htmlFor="female">여자</label>
-      <br />
-      {!isActive ?
-        <StyledLink to='/testExample' isActive={isActive} onClick={(e) => { e.preventDefault(); }}><IsActiveBtn name="검사 시작" /></StyledLink>
-        : <StyledLink to='/testExample' isActive={isActive}><IsActiveBtn name="검사 시작" /></StyledLink>}
-      </form>
+      <section className="setUser">
+        <div className="inner">
+          <div className="content">
+            <h1>직업가치관검사</h1>
+            <form type="submit">
+              <div class="name">
+                <p>이름</p>
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  onChange={handleUsername} />
+              </div>
+              <br />
+              <div class="gender">
+                <p>성별</p>
+                <input type="radio" id="male" name="gender" value="male" onClick={getGender} />
+                <label htmlFor="male">남자</label>
+                <br />
+                <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
+                <label htmlFor="female">여자</label>
+              </div>  
+              <br />
+              <div class="startBtn">
+                {!isActive ?
+                <StyledLink to='/testExample' isActive={isActive} onClick={(e) => { e.preventDefault(); }}><IsActiveBtn name="검사 시작" /></StyledLink>
+                : <StyledLink to='/testExample' isActive={isActive}><IsActiveBtn name="검사 시작" /></StyledLink>}
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
