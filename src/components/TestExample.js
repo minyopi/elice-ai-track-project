@@ -11,10 +11,8 @@ export function TestExample() {
       가치의 뜻을 잘모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
     </p>
       <h3>두개 가치 중에 자신에게 더 중요한 가치를 선택하세요.</h3>
-      <input type="radio" name="answer" value="answer"></input>
-      <label htmlFor="answer">능력발휘</label>
-      <input type="radio" name="answer" value="answer"></input>
-      <label htmlFor="answer">자율성</label>
+      <label><input type="radio" name="answer" value="answer"/>능력발휘</label>
+      <label><input type="radio" name="answer" value="answer"/>자율성</label>
       <br />
       <Link to='/test/1'><button type="button" className="btn">검사시작</button></Link>
     </>

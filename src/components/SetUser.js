@@ -18,7 +18,7 @@ export function SetUser() {
   // console.log(context.name);
   // console.log(context.gender);
 
-  const handleUsername = (e) => {
+  const getUsername = (e) => {
     setUsername(e.target.value);
   };
   const getGender = (e) => {
@@ -30,8 +30,15 @@ export function SetUser() {
     else setIsActive(false)
   }, [username, gender])
 
-  function IsActiveBtn(props){
-    return <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>{props.name}</button>
+  function ActiveBtn(props){
+    function IsActiveBtn(props){
+      return <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>{props.name}</button>
+    }
+     return (
+       !isActive ?
+      <StyledLink to={props.to} isActive={props.isActive} onClick={(e) => {e.preventDefault();}}><IsActiveBtn name="검사 시작" /></StyledLink>
+      : <StyledLink to={props.to} isActive={props.isActive}><IsActiveBtn name="검사 시작" /></StyledLink>
+      )
   }
 
   return (
@@ -41,28 +48,24 @@ export function SetUser() {
           <div className="content">
             <h1>직업가치관검사</h1>
             <form type="submit">
-              <div class="name">
+              <div className="name">
                 <p>이름</p>
                 <input
                   type="text"
                   id="username"
                   value={username}
-                  onChange={handleUsername} />
+                  onChange={getUsername} />
               </div>
               <br />
-              <div class="gender">
+              <div className="gender">
                 <p>성별</p>
-                <input type="radio" id="male" name="gender" value="male" onClick={getGender} />
-                <label htmlFor="male">남자</label>
+                <label><input type="radio" name="gender" value="male" onClick={getGender} />남자</label>
                 <br />
-                <input type="radio" id="female" name="gender" value="female" onClick={getGender}></input>
-                <label htmlFor="female">여자</label>
+                <label><input type="radio" name="gender" value="female" onClick={getGender}/>여자</label>
               </div>  
               <br />
-              <div class="startBtn">
-                {!isActive ?
-                <StyledLink to='/testExample' isActive={isActive} onClick={(e) => { e.preventDefault(); }}><IsActiveBtn name="검사 시작" /></StyledLink>
-                : <StyledLink to='/testExample' isActive={isActive}><IsActiveBtn name="검사 시작" /></StyledLink>}
+              <div className="startBtn">
+                <ActiveBtn name="검사 시작" to='./TestExample' isActive={isActive}></ActiveBtn>
               </div>
             </form>
           </div>

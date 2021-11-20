@@ -2,7 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { key } from '../key';
 import { useParams, Link } from 'react-router-dom';
+import styled from 'styled-components';
 
+const StyledLink = styled(Link)`
+    opacity: ${(props) => (props.isActive ? "1" : "0.6")};
+    cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+  `;
 
 export function Test(props) {
   // 문항 불러와서 saveData에 저장하기
@@ -26,10 +31,6 @@ export function Test(props) {
 
 
   // 선택한 input 값 받아오기
-  // const inputsInitial = {}
-  // for (let i = 1; i < saveData.length+1; i++){
-  //   inputsInitial[`${i}`] = "";
-  // }
   const [inputs, setInputs] = useState({});
   function handleChange(e){
     const { value, name } = e.target;
@@ -47,11 +48,11 @@ export function Test(props) {
       <>
         <div>
           <h3>{props.item.qitemNo}. {props.item.question}</h3>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="1" />{props.item.answer01}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="2" />{props.item.answer02}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="3" />{props.item.answer03}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="4" />{props.item.answer04}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="5" />{props.item.answer05}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="1" checked={inputs[String(props.idx + 1)] === "1" ? true : false } />{props.item.answer01}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="2" checked={inputs[String(props.idx + 1)] === "2" ? true : false } />{props.item.answer02}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="3" checked={inputs[String(props.idx + 1)] === "3" ? true : false } />{props.item.answer03}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="4" checked={inputs[String(props.idx + 1)] === "4" ? true : false } />{props.item.answer04}</label>
+          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="5" checked={inputs[String(props.idx + 1)] === "5" ? true : false } />{props.item.answer05}</label>
         </div>
     </>
     )
@@ -75,27 +76,47 @@ export function Test(props) {
   
 
   // 이전, 다음 버튼 설정해주는 컴포넌트
+  // 값을 선택하지 않으면 비활성화
+  const [isActive, setIsActive] = useState(false);
   function SetButton(){
     let page_num = Number(page)
     if ( page_num === 1 ){
       return(
         <>
         <Link to={'/testExample'}><button>이전</button></Link>
-        <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>      
+        { !isActive ?
+        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </StyledLink> :
+        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive}>
+        <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </StyledLink> }   
         </>
         )
       } else if (page_num === 10){
         return(
           <>
           <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
-          <Link to={'/finishTest'}><button>완료</button></Link>
+          { !isActive ?
+          <StyledLink to={'/finishTest'} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+            <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
+          </StyledLink> :
+          <StyledLink to={'/finishTest'} isActive={isActive}>
+          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
+          </StyledLink> }
           </>
         )
       }
     return(
       <>
         <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
-        <Link to={'/test/'+ (page_num+1)}><button>다음</button></Link>
+        { !isActive ?
+        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </StyledLink> :
+        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive}>
+        <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </StyledLink> }
       </>
     )
   }
