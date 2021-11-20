@@ -67,17 +67,31 @@ export function Test(props) {
 
   const questions = saveData.map((item, idx) => {
     question_count += 1;
-    if(question_count % 5 === 0) page_count += 1;
+
+    if (question_count === 1) page_count += 0;
+    else if(question_count % 5 === 1) page_count += 1;
+
     if (page === page_count){
       return <Question item={item} idx={idx} key={idx+1} ></Question>;
     }
   });
 
-  
-
-  // 이전, 다음 버튼 설정해주는 컴포넌트
+ 
   // 값을 선택하지 않으면 비활성화
   const [isActive, setIsActive] = useState(false);
+  
+  // isActive 관리를 어떻게 해줄건지.?????? 하
+   useEffect(() => {
+    if (Object.keys(inputs).length === 0){
+      setIsActive(false)
+    } else {
+      setIsActive(true)
+    }
+    console.log(isActive)
+  }, [ inputs ])
+
+
+  // 이전, 다음 버튼 설정해주는 컴포넌트
   function SetButton(){
     let page_num = Number(page)
     if ( page_num === 1 ){
