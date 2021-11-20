@@ -13,10 +13,8 @@ export function SetUser() {
   const [gender, setGender] = useState('');
   const [isActive, setIsActive] = useState(false);
 
-  //  context를 사용하고 싶을때는 이렇게
-  // const context = useContext(UserContext);
-  // console.log(context.name);
-  // console.log(context.gender);
+  //  context를 사용하기
+  const context = useContext(UserContext);
 
   const getUsername = (e) => {
     setUsername(e.target.value);
@@ -29,7 +27,10 @@ export function SetUser() {
   useEffect(() => {
     if ( username !== "" && username !== undefined && gender !== undefined) setIsActive(true)
     else setIsActive(false)
+    context['name'] = username;
+    context['gender'] = gender;
   }, [username, gender])
+  console.log(context)
 
   function ActiveBtn(props){
     function IsActiveBtn(props){
