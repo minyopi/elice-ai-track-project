@@ -21,6 +21,7 @@ export function SetUser() {
   const getUsername = (e) => {
     setUsername(e.target.value);
   };
+  
   const getGender = (e) => {
     setGender(e.target.value);
   };
