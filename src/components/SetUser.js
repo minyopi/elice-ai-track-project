@@ -9,8 +9,8 @@ const StyledLink = styled(Link)`
   `;
 
 export function SetUser() {
-  const [username, setUsername] = useState();
-  const [gender, setGender] = useState();
+  const [username, setUsername] = useState('');
+  const [gender, setGender] = useState('');
   const [isActive, setIsActive] = useState(false);
 
   //  context를 사용하고 싶을때는 이렇게
@@ -21,7 +21,7 @@ export function SetUser() {
   const getUsername = (e) => {
     setUsername(e.target.value);
   };
-  
+
   const getGender = (e) => {
     setGender(e.target.value);
   };
@@ -48,7 +48,7 @@ export function SetUser() {
         <div className="inner">
           <div className="content">
             <h1>직업가치관검사</h1>
-            <form type="submit">
+            <form>
               <div className="name">
                 <p>이름</p>
                 <input
@@ -60,9 +60,9 @@ export function SetUser() {
               <br />
               <div className="gender">
                 <p>성별</p>
-                <label><input type="radio" name="gender" value="male" onClick={getGender} />남자</label>
+                <label><input type="radio" name="gender" value="male" onClick={getGender} checked={ gender === "male" ? true : false } />남자</label>
                 <br />
-                <label><input type="radio" name="gender" value="female" onClick={getGender}/>여자</label>
+                <label><input type="radio" name="gender" value="female" onClick={getGender} checked={ gender === "female" ? true : false } />여자</label>
               </div>  
               <br />
               <div className="startBtn">

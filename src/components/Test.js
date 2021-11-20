@@ -32,6 +32,7 @@ export function Test(props) {
 
   // 선택한 input 값 받아오기
   const [inputs, setInputs] = useState({});
+  const [ countPer, setCountPer ] = useState(0)
   function handleChange(e){
     const { value, name } = e.target;
     setInputs((cur) => {
@@ -39,8 +40,8 @@ export function Test(props) {
       newSetInputs[name]= value;
       return newSetInputs;
     });
+    setCountPer(parseInt( (100 * Object.keys(inputs).length) / saveData.length ))
   }
-  console.log("inputs=",inputs)
 
   // 문항 만드는 템플릿 컴포넌트
   function Question(props){
@@ -138,7 +139,7 @@ export function Test(props) {
   return (
     <>
       <h2>검사 진행</h2>
-      <h3>0%</h3>
+      <h3>{countPer}%</h3>
       {saveData && saveData.length > 0 ? questions : undefined}
       <br />
       <SetButton></SetButton>
