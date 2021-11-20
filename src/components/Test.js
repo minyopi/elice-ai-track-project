@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { key } from '../key';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { UserContext } from "../store/user";
 
 const StyledLink = styled(Link)`
     opacity: ${(props) => (props.isActive ? "1" : "0.6")};
@@ -10,6 +10,7 @@ const StyledLink = styled(Link)`
   `;
 
 export function Test(props) {
+  const context = useContext(UserContext);
   // 문항 불러와서 saveData에 저장하기
   const [saveData, setSaveData] = useState([]);
   
@@ -19,7 +20,7 @@ export function Test(props) {
         var config = {
           headers: { 'Access-Control-Allow-Origin': '*' }
         };
-        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${key}&q=25`, config);
+        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${context.apikey}&q=25`, config);
         setSaveData(response.data['RESULT']);
         console.log("saveData =",saveData);
       } catch (e) {
@@ -31,7 +32,7 @@ export function Test(props) {
 
 
   // 선택한 input 값 받아오기
-  const [inputs, setInputs] = useState({});
+  const [ inputs, setInputs ] = useState({});
   const [ countPer, setCountPer ] = useState(0)
   function handleChange(e){
     const { value, name } = e.target;
@@ -40,8 +41,19 @@ export function Test(props) {
       newSetInputs[name]= value;
       return newSetInputs;
     });
-    setCountPer(parseInt( (100 * Object.keys(inputs).length) / saveData.length ))
   }
+  const inputsForPost = []
+  useEffect(() => {
+    setCountPer(parseInt( (100 * Object.keys(inputs).length) / saveData.length ));
+    if (Object.keys(inputs).length === saveData.length){
+      for (let input of Object.entries(inputs)){
+        inputsForPost.push(input.join("="));
+        context.answers = inputsForPost.join(" ");
+      }
+    }
+  }, [inputs, saveData]);
+  console.log(context)
+  
 
   // 문항 만드는 템플릿 컴포넌트
   function Question(props){
@@ -88,7 +100,6 @@ export function Test(props) {
     } else {
       setIsActive(true)
     }
-    console.log(isActive)
   }, [ inputs ])
 
 
