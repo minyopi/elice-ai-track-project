@@ -1,8 +1,8 @@
 import React, {useState} from 'react'
 import { Route } from 'react-router-dom';
 import UserStore from "./store/user";
-import './css/reset.css';
-import './css/setUsers.css'
+// import './css/reset.css';
+// import './css/setUsers.css'
 import './css/app.css';
 import { TestExample } from './components/TestExample';
 import { SetUser } from './components/SetUser';
