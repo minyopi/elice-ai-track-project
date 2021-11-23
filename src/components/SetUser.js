@@ -61,9 +61,9 @@ export function SetUser() {
               <br />
               <div className="gender">
                 <p>성별</p>
-                <label><input type="radio" name="gender" value="male" onClick={getGender} checked={ gender === "male" ? true : false } />남자</label>
+                <label><input type="radio" name="gender" value="100323" onClick={getGender} checked={ gender === "100323" ? true : false } />남자</label>
                 <br />
-                <label><input type="radio" name="gender" value="female" onClick={getGender} checked={ gender === "female" ? true : false } />여자</label>
+                <label><input type="radio" name="gender" value="100324" onClick={getGender} checked={ gender === "100324" ? true : false } />여자</label>
               </div>  
               <br />
               <div className="startBtn">

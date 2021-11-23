@@ -1,10 +1,30 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { UserContext } from "../store/user";
 
 export function Result() {
+  const context = useContext(UserContext);
+  const [data, setData] = useState({})
+
+  useEffect(() => {
+    async function loadResult(){
+      try {
+        const response = await axios.post(`http://www.career.go.kr/inspct/openapi/test/report?apikey=${context.apikey}&qestrnSeq=25`, context);
+        setData(response.data.RESULT)
+        console.log(response);
+      } catch (e) {
+        console.log('에러 발생');
+      }
+    }
+    loadResult();
+  }, [])
+
   return (
     <>
       <h1>결과 페이지 입니다.</h1>
+      <p>{data.inspctSeq}</p>
+      <p>{data.url}</p>
       <Link to='/finishTest'><button>이전</button></Link>
       <Link to='/'><button>처음으로</button></Link>
     </>
