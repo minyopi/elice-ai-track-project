@@ -60,7 +60,6 @@ export function Test(props) {
       }
     }
   }, [inputs, saveData]);
-  console.log(inputs)
   
 
   // 문항 만드는 템플릿 컴포넌트
@@ -69,12 +68,8 @@ export function Test(props) {
       <>
         <div>
           <h3>{props.item.qitemNo}. {props.item.question}</h3>
-          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore01} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore01 ? true : false } />{props.item.answer01}<p>
-            {props.item.answer03}
-          </p></label>
-          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore02} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore02 ? true : false } />{props.item.answer02}<p>
-            {props.item.answer04}
-          </p></label>
+          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore01} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore01 ? true : false } />{props.item.answer01}</label>
+          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore02} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore02 ? true : false } />{props.item.answer02}</label>
         </div>
     </>
     )
