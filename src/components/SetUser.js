@@ -6,6 +6,7 @@ import { UserContext } from "../store/user";
 const StyledLink = styled(Link)`
     opacity: ${(props) => (props.isActive ? "1" : "0.6")};
     cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+    text-decoration: none;
   `;
 
 export function SetUser() {
@@ -30,7 +31,6 @@ export function SetUser() {
     context['name'] = username;
     context['gender'] = gender;
   }, [username, gender])
-  console.log(context)
 
   function ActiveBtn(props){
     function IsActiveBtn(props){
@@ -39,7 +39,7 @@ export function SetUser() {
      return (
        !isActive ?
       <StyledLink to={props.to} isActive={props.isActive} onClick={(e) => {e.preventDefault();}}><IsActiveBtn name="검사 시작" /></StyledLink>
-      : <StyledLink to={props.to} isActive={props.isActive}><IsActiveBtn name="검사 시작" /></StyledLink>
+      : <StyledLink to={props.to} isActive={props.isActive}><IsActiveBtn name={props.name} /></StyledLink>
       )
   }
 
@@ -61,9 +61,9 @@ export function SetUser() {
               <br />
               <div className="gender">
                 <p>성별</p>
-                <label><input type="radio" name="gender" value="100323" onClick={getGender} checked={ gender === "100323" ? true : false } />남자</label>
+                <label><input type="radio" name="gender" value="100323" onChange={getGender} checked={ gender === "100323" ? true : false } />남자</label>
                 <br />
-                <label><input type="radio" name="gender" value="100324" onClick={getGender} checked={ gender === "100324" ? true : false } />여자</label>
+                <label><input type="radio" name="gender" value="100324" onChange={getGender} checked={ gender === "100324" ? true : false } />여자</label>
               </div>  
               <br />
               <div className="startBtn">

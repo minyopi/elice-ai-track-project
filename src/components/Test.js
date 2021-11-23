@@ -7,10 +7,15 @@ import { UserContext } from "../store/user";
 const StyledLink = styled(Link)`
     opacity: ${(props) => (props.isActive ? "1" : "0.6")};
     cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+    text-decoration: none;
   `;
 
 export function Test(props) {
+  // context 사용하기 위해 가져오기
   const context = useContext(UserContext);
+
+  
+
   // 문항 불러와서 saveData에 저장하기
   const [saveData, setSaveData] = useState([]);
   
@@ -20,9 +25,8 @@ export function Test(props) {
         var config = {
           headers: { 'Access-Control-Allow-Origin': '*' }
         };
-        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${context.apikey}&q=25`, config);
+        const response = await axios.get(`http://www.career.go.kr/inspct/openapi/test/questions?apikey=${context.apikey}&q=6`, config);
         setSaveData(response.data['RESULT']);
-        console.log("saveData =",saveData);
       } catch (e) {
         console.log('에러 발생');
       }
@@ -32,7 +36,11 @@ export function Test(props) {
 
 
   // 선택한 input 값 받아오기
-  const [ inputs, setInputs ] = useState({});
+  const inputsInitial = {}
+  for (let i = 1; i < saveData.length+1; i++){
+    inputsInitial[`B${i}`] = "";
+  }
+  const [ inputs, setInputs ] = useState(inputsInitial);
   const [ countPer, setCountPer ] = useState(0)
   function handleChange(e){
     const { value, name } = e.target;
@@ -52,7 +60,7 @@ export function Test(props) {
       }
     }
   }, [inputs, saveData]);
-  console.log(context)
+  console.log(inputs)
   
 
   // 문항 만드는 템플릿 컴포넌트
@@ -61,11 +69,12 @@ export function Test(props) {
       <>
         <div>
           <h3>{props.item.qitemNo}. {props.item.question}</h3>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="1" checked={inputs[String(props.idx + 1)] === "1" ? true : false } />{props.item.answer01}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="2" checked={inputs[String(props.idx + 1)] === "2" ? true : false } />{props.item.answer02}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="3" checked={inputs[String(props.idx + 1)] === "3" ? true : false } />{props.item.answer03}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="4" checked={inputs[String(props.idx + 1)] === "4" ? true : false } />{props.item.answer04}</label>
-          <label><input type="radio" name={String(props.idx + 1)} onChange={handleChange} value="5" checked={inputs[String(props.idx + 1)] === "5" ? true : false } />{props.item.answer05}</label>
+          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore01} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore01 ? true : false } />{props.item.answer01}<p>
+            {props.item.answer03}
+          </p></label>
+          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore02} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore02 ? true : false } />{props.item.answer02}<p>
+            {props.item.answer04}
+          </p></label>
         </div>
     </>
     )
@@ -119,7 +128,7 @@ export function Test(props) {
         </StyledLink> }   
         </>
         )
-      } else if (page_num === 10){
+      } else if (page_num === 6){
         return(
           <>
           <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
@@ -146,6 +155,7 @@ export function Test(props) {
       </>
     )
   }
+
 
   return (
     <>
