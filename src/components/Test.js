@@ -101,10 +101,10 @@ export function Test(props) {
   const [isActive, setIsActive] = useState(false);
   
   // isActive 관리를 어떻게 해줄건지.?????? 하
-  // useEffect(() => {
-  //   if (memoAnswer === 0) setIsActive(false)
-  //   else if (memoAnswer === 5) setIsActive(true);
-  // }, [ memoAnswer ])
+  useEffect(() => {
+    if (memoAnswer === 0) setIsActive(false)
+    else if (memoAnswer > 1) setIsActive(true);
+  }, [ memoAnswer ])
 
 
   // 이전, 다음 버튼 설정해주는 컴포넌트
@@ -113,7 +113,7 @@ export function Test(props) {
     if ( page_num === 1 ){
       return(
         <>
-        <Link to={'/testExample'}><button>이전</button></Link>
+        <Link to={'/testExample'}><button className="btn">이전</button></Link>
         { !isActive ?
         <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
@@ -126,7 +126,7 @@ export function Test(props) {
       } else if (page_num === 6){
         return(
           <>
-          <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
+          <Link to={'/test/'+ (page_num-1)}><button className="btn">이전</button></Link>
           { !isActive ?
           <StyledLink to={'/finishTest'} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
             <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
@@ -139,7 +139,7 @@ export function Test(props) {
       }
     return(
       <>
-        <Link to={'/test/'+ (page_num-1)}><button>이전</button></Link>
+        <Link to={'/test/'+ (page_num-1)}><button className="btn">이전</button></Link>
         { !isActive ?
         <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>

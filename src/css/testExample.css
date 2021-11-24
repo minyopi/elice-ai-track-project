@@ -1,0 +1,67 @@
+.inner{
+    /* border: 2px solid orange; */
+}
+.testExample .content{
+    /* border: 2px solid blue; */
+    margin: 50px auto;
+}
+.testExample .title {
+    display: flex;
+}
+.testExample h2 {
+    font-weight: bold;
+    font-size: 32px;
+    margin-right: 800px;
+}
+.testExample .countPer{
+    font-weight: bold;
+    font-size: 24px;
+}
+.testExample .countBar{
+    height: 16px;
+    margin-top: 28px;
+    border-radius: 10px;
+    padding: 0 20px;
+    background-color:#e0e0e0;
+    box-sizing: border-box;
+}
+.testExample p{
+    margin-top: 52px;
+    font-size: 20px;
+    line-height: 1.5;
+}
+.testExample .question{
+    height: 200px;
+    margin-top: 52px;
+    background-color: #B2ACFA;
+    border: 2px solid#6B5EF5;
+}
+.testExample .question .text{
+    width: 500px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+.testExample .q{
+    font-weight: bold;
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+}
+.testExample .question .example{
+    margin-top: 48px;
+    text-align: center;
+}
+.testExample .question label{
+    font-size: 20px;
+    margin: 0 20px;
+    cursor: pointer;
+}
+.testExample .btn{
+    width: 160px;
+    height: 48px;
+    font-size: 20px;
+    padding-left: 40px;
+    margin-top: 52px;
+    margin-left: 400px;
+}
+
