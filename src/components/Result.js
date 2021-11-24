@@ -83,7 +83,7 @@ export function Result() {
   function ShowJobInfo(){
     const graduateHigh = jobInfo
     .filter((item) => {
-      return item[2] === 1
+      return item[2] === 1 || item[2] === 2
     })
     .map((item) => {
       return item[1]
@@ -91,7 +91,7 @@ export function Result() {
 
     const graduateCollege = jobInfo
     .filter((item) => {
-      return item[2] === 2 || item[2] === 3
+      return item[2] === 3
     })
     .map((item) => {
       return item[1]
