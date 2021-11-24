@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -13,8 +13,6 @@ const StyledLink = styled(Link)`
 export function Test(props) {
   // context 사용하기 위해 가져오기
   const context = useContext(UserContext);
-
-  
 
   // 문항 불러와서 saveData에 저장하기
   const [saveData, setSaveData] = useState([]);
@@ -49,6 +47,11 @@ export function Test(props) {
       newSetInputs[name]= value;
       return newSetInputs;
     });
+    setAnswers((cur) => {
+      let newAnswers = [...cur];
+      newAnswers.push(value);
+      return newAnswers
+    })
   }
   const inputsForPost = []
   useEffect(() => {
@@ -61,50 +64,47 @@ export function Test(props) {
     }
   }, [inputs, saveData]);
   
-
-  // 문항 만드는 템플릿 컴포넌트
-  function Question(props){
-    return(
-      <>
-        <div>
-          <h3>{props.item.qitemNo}. {props.item.question}</h3>
-          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore01} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore01 ? true : false } />{props.item.answer01}</label>
-          <label><input type="radio" name={'B'+String(props.idx + 1)} onChange={handleChange} value={props.item.answerScore02} checked={inputs['B'+String(props.idx + 1)] === props.item.answerScore02 ? true : false } />{props.item.answer02}</label>
-        </div>
-    </>
-    )
-  }
-
-
-  // useParams 사용해서 5문항씩 페이지 나눠주기
+  
+  // useParams 사용해서 한 페이지당 5문항씩 페이지 나눠주기
   const params = useParams();
   let page = Number(params.page);
   let page_count = 1;
   let question_count = 0;
-
-  const questions = saveData.map((item, idx) => {
+  
+  const questions = saveData.filter(() => {
     question_count += 1;
-
-    if (question_count === 1) page_count += 0;
-    else if(question_count % 5 === 1) page_count += 1;
-
-    if (page === page_count){
-      return <Question item={item} idx={idx} key={idx+1} ></Question>;
-    }
+    if ( question_count === 1) page_count = 1;
+    else if (question_count % 5 === 1) page_count += 1;
+    return page === page_count;
   });
+  
+  // 문항 만드는 템플릿 컴포넌트
+  const [answers, setAnswers] = useState([])
+  const memoAnswer = useMemo(() => { return answers.length }, [ answers ])
+
+  const ShowQuestions = () => {
+    const show = questions.map((item, idx)=>{
+    return (
+        <>
+          <h3>{item.qitemNo}. {item.question}</h3>
+          <form>
+              <label><input type="radio" name={'B'+String(idx + 1)} onChange={handleChange} value={item.answerScore01} checked={inputs['B'+String(idx + 1)] === item.answerScore01 ? true : false } />{item.answer01}</label>
+              <label><input type="radio" name={'B'+String(idx + 1)} onChange={handleChange} value={item.answerScore02} checked={inputs['B'+String(idx + 1)] === item.answerScore02 ? true : false } />{item.answer02}</label>
+          </form>
+        </>)
+      })
+    return show;
+  }
 
  
   // 값을 선택하지 않으면 비활성화
   const [isActive, setIsActive] = useState(false);
   
   // isActive 관리를 어떻게 해줄건지.?????? 하
-   useEffect(() => {
-    if (Object.keys(inputs).length === 0){
-      setIsActive(false)
-    } else {
-      setIsActive(true)
-    }
-  }, [ inputs ])
+  // useEffect(() => {
+  //   if (memoAnswer === 0) setIsActive(false)
+  //   else if (memoAnswer === 5) setIsActive(true);
+  // }, [ memoAnswer ])
 
 
   // 이전, 다음 버튼 설정해주는 컴포넌트
@@ -156,7 +156,9 @@ export function Test(props) {
     <>
       <h2>검사 진행</h2>
       <h3>{countPer}%</h3>
-      {saveData && saveData.length > 0 ? questions : undefined}
+      {saveData && saveData.length > 0 ? 
+      <ShowQuestions />
+       : undefined}
       <br />
       <SetButton></SetButton>
     </>
