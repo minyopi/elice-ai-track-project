@@ -6,10 +6,15 @@ import { UserContext } from "../store/user";
 export function Result() {
   const context = useContext(UserContext);
   const [jsonData, setJsonData] = useState({})
+  const [jobInfo, setJobInfo] = useState([])
+  const [majorInfo, setMajorInfo] = useState([])
 
+  // POST, GET 통신으로 정보 받아오기
   useEffect(() => {
     async function load(){
       let seq = "";
+      let maxNum1 = "";
+      let maxNum2 = "";
       async function loadResult(){
         try {
           const response = await axios.post(`http://www.career.go.kr/inspct/openapi/test/report?apikey=${context.apikey}&qestrnSeq=6`, context);
@@ -23,30 +28,245 @@ export function Result() {
         try {
           const response2 = await axios.get(`https://www.career.go.kr/inspct/api/psycho/report?seq=${seq}`);
           setJsonData(response2['data'])
+          const wonScore = jsonData.result['wonScore'];
+          const getMaxNum = [];
+          for (let i of wonScore.split(" ")){
+              let wonScoreValue = i.split("=")
+              getMaxNum.push([parseInt(wonScoreValue[1]),wonScoreValue[0]])
+          }
+          let maxNums = []
+          for (let i = 0; i < getMaxNum.length; i++){
+              if (maxNums.length < 2){
+                  maxNums.push(getMaxNum[i])
+                  maxNums.sort()
+              } else {
+                  for (let j = 0; j < maxNums.length; j++){
+                      if (maxNums[j][0] < getMaxNum[i][0]){
+                          maxNums.shift()
+                          maxNums.push(getMaxNum[i])
+                          maxNums.sort()
+                      }
+                  }
+              }
+          }
+          maxNum1 = maxNums[1][1];
+          maxNum2 = maxNums[0][1];
         } catch (error) {
           console.log("JSON Data GET요청에서 에러 발생")
         }
       }
       async function loadJobInfo(){
         try {
-          
+          console.log(maxNum1,maxNum2);
+          const response3 = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${maxNum1}&no2=${maxNum2}`);
+          setJobInfo(response3['data'])
         } catch (e) {
           console.log("관련 직종 GET 요청에서 에러")
         }
       }
       async function loadMajorInfo(){
         try {
-          
+          const response4 = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/majors?no1=${maxNum1}&no2=${maxNum2}`);
+          setMajorInfo(response4['data'])
         } catch (e) {
           console.log("관련 학과 GET 요청에서 에러")
         }
       }
       await loadResult();
       await loadJsonData();
+      await loadJobInfo();
+      await loadMajorInfo();
     }
     load();
   }, [ ])
+
+  function ShowJobInfo(){
+    const graduateHigh = jobInfo
+    .filter((item) => {
+      return item[2] === 1
+    })
+    .map((item) => {
+      return item[1]
+    });
+
+    const graduateCollege = jobInfo
+    .filter((item) => {
+      return item[2] === 2 || item[2] === 3
+    })
+    .map((item) => {
+      return item[1]
+    })
+    .join(", ");
+
+    const graduateUniv = jobInfo
+    .filter((item) => {
+      return item[2] === 4
+    })
+    .map((item) => {
+      return item[1]
+    })
+    .join(", ");
+
+    const graduateGrad = jobInfo
+    .filter((item) => {
+      return item[2] === 5
+    })
+    .map((item) => {
+      return item[1]
+    })
+    .join(", ");
+    
+
+
+    return (
+    <>
+      <h3>종사자 평균 학력별</h3>
+      <table border="1">
+        <th>분야</th>
+        <th>직업</th>
+        <tr>
+          <td>고졸</td>
+          <td>{graduateHigh}</td>
+        </tr>
+        <tr>
+          <td>전문대졸</td>
+          <td>{graduateCollege}</td>
+        </tr>
+        <tr>
+          <td>대졸</td>
+          <td>{graduateUniv}</td>
+        </tr>
+        <tr>
+          <td>대학원졸</td>
+          <td>{graduateGrad}</td>
+        </tr>
+      </table>
+    </>
+    )
+  }
+
+  function ShowMajorInfo(){
+    return (
+    <>
+      <h3>종사자 평균 전공별</h3>
+      <table border="1">
+        <th>분야</th>
+        <th>직업</th>
+        <tr>
+          <td>계열무관</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 0
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>인문</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 1
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>사회</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 2
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>교육</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 3
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>공학</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 4
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>자연</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 5
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>의학</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 6
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+        <tr>
+          <td>예체능</td>
+          <td>
+            {majorInfo
+              .filter((item) => {
+                return item[2] === 7
+              })
+              .map((item) => {
+                return item[1]
+              })
+              .join(", ")}
+          </td>
+        </tr>
+      </table>
+    </>
+    )
+  }
   
+  function ShowChart(){
+    const wonScore = jsonData.result['wonScore'];
+    const wonScoreList = [];
+    const wonScoreData = wonScore.split(" ").map((item)=>{return item.split("=")[1]}).forEach((item)=>{wonScoreList.push(<span>{item}</span>)});
+    return wonScoreList;
+  }
 
   return (
     <>
@@ -65,9 +285,12 @@ export function Result() {
         </tr>
       </table>
       <h2>직업가치관 결과</h2>
-      <h2>가치관과 관련이 높은 직업</h2>
+      <ShowChart />
       </>
       : undefined}
+      <h2>가치관과 관련이 높은 직업</h2>
+      { jobInfo && jobInfo.length > 0 ? <ShowJobInfo /> : undefined }
+      { majorInfo && majorInfo.length > 0 ? <ShowMajorInfo /> : undefined }
       <Link to='/'><button>다시 검사하기</button></Link>
     </>
   );
