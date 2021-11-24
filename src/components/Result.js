@@ -87,7 +87,8 @@ export function Result() {
     })
     .map((item) => {
       return item[1]
-    });
+    })
+    .join(", ");
 
     const graduateCollege = jobInfo
     .filter((item) => {

@@ -1,9 +1,10 @@
 import React from 'react'
 import { Route } from 'react-router-dom';
 import UserStore from "./store/user";
-// import './css/reset.css';
-// import './css/setUsers.css'
+import './css/reset.css';
+import './css/setUsers.css'
 import './css/app.css';
+import './css/testExample.css'
 import { TestExample } from './components/TestExample';
 import { SetUser } from './components/SetUser';
 import { Test } from './components/Test';

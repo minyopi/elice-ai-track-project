@@ -35,17 +35,32 @@ export function TestExample() {
 
   return (
     <>
-      <h2>검사예시</h2>
-      <h3>0%</h3>
-      <p>
-        직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.<br />
-      가치의 뜻을 잘모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
-    </p>
-      <h3>두개 가치 중에 자신에게 더 중요한 가치를 선택하세요.</h3>
-      <label><input type="radio" name="answer" onChange={handleAnswer} value="answer1" checked={answer === "answer1" ? true : false } />능력발휘</label>
-      <label><input type="radio" name="answer" onChange={handleAnswer} value="answer2" checked={answer === "answer2" ? true : false } />자율성</label>
-      <br />
-      <ActiveBtn name="검사 시작" to="/test/1" isActive={isActive}></ActiveBtn>
+      <section className="testExample">
+        <div className="inner">
+          <div className="content">
+            <div className="title">
+              <h2>검사예시</h2>
+              <h3 className="countPer">0%</h3>
+            </div>
+            <div className="countBar"></div>
+            <p>
+              직업과 관련된 두개의 가치 중에서 자기에게 더 중요한 가치에 표시하세요.<br />
+            가치의 뜻을 잘모르겠다면 문항 아래에 있는 가치의 설명을 확인해보세요.
+            </p>
+            <div className="question">
+              <div className="text">
+                <h3 className="q">두개 가치 중에 자신에게 더 중요한 가치를 선택하세요.</h3>
+                <form className="example">
+                  <label><input type="radio" name="answer" onChange={handleAnswer} value="answer1" checked={answer === "answer1" ? true : false } />능력발휘</label>
+                  <label><input type="radio" name="answer" onChange={handleAnswer} value="answer2" checked={answer === "answer2" ? true : false } />자율성</label>
+                </form>
+                <br />
+              </div>
+            </div>
+            <ActiveBtn name="검사 시작" to="/test/1" isActive={isActive}></ActiveBtn>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
