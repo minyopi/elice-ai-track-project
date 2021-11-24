@@ -27,6 +27,20 @@ export function Result() {
           console.log("JSON Data GET요청에서 에러 발생")
         }
       }
+      async function loadJobInfo(){
+        try {
+          
+        } catch (e) {
+          console.log("관련 직종 GET 요청에서 에러")
+        }
+      }
+      async function loadMajorInfo(){
+        try {
+          
+        } catch (e) {
+          console.log("관련 학과 GET 요청에서 에러")
+        }
+      }
       await loadResult();
       await loadJsonData();
     }
@@ -50,10 +64,10 @@ export function Result() {
           <td>{jsonData.result['endDtm'].slice(0,10).split("-").join(".")}</td>
         </tr>
       </table>
-      </>
-      : undefined}
       <h2>직업가치관 결과</h2>
       <h2>가치관과 관련이 높은 직업</h2>
+      </>
+      : undefined}
       <Link to='/'><button>다시 검사하기</button></Link>
     </>
   );
