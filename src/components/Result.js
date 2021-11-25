@@ -8,9 +8,8 @@ const BasicLink = styled(Link)`
 `;
 const ChartBar = styled.div`
   width: 100%;
-  height: ${props => props.num*15}%;
+  height: ${props => props.num*10}%;
   background-color: #B2ACFA;
-  // border: 2px solid blue;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -93,18 +92,9 @@ export function Result() {
   }, [ ])
 
   function ShowJobInfo(){
-    const graduateHigh = jobInfo
-    .filter((item) => {
-      return item[2] === 1 || item[2] === 2
-    })
-    .map((item) => {
-      return item[1]
-    })
-    .join(", ");
-
     const graduateCollege = jobInfo
     .filter((item) => {
-      return item[2] === 3
+      return item[2] === 1 || item[2] === 2 || item[2] === 3
     })
     .map((item) => {
       return item[1]
@@ -137,10 +127,6 @@ export function Result() {
       <table>
         <th className="job-th-1">분야</th>
         <th className="job-th-1">직업</th>
-        <tr>
-          <td>고졸</td>
-          <td>{graduateHigh}</td>
-        </tr>
         <tr>
           <td>전문대졸</td>
           <td>{graduateCollege}</td>
@@ -321,6 +307,16 @@ export function Result() {
           <div className="jobValue">
             <h2>직업가치관 결과</h2>
             <ShowChart />
+            <div className="category">
+              <p>능력발휘</p>
+              <p>자율성</p>
+              <p>보수</p>
+              <p>안정성</p>
+              <p>사회적 인정</p>
+              <p>사회봉사</p>
+              <p>자기계발</p>
+              <p>창의성</p>
+            </div>
           </div>
           </>
           : undefined}

@@ -52,7 +52,6 @@ th{
 }
 .result .jobValue{
     margin-top: 40px;
-    /* border: 2px solid orange; */
 }
 .result .chartBarContainer{
     border: 2px solid  #C3CFD9;
@@ -61,24 +60,40 @@ th{
     justify-content: center;
     text-align: center;
     margin-top: 40px;
+    position: relative;
+    box-sizing: border-box;
 }
 .result .chartBarContainer .barContainer{
-    /* border: 2px solid red; */
     position: relative;
     width: 70px;
     margin: 0 20px;
+    /* border-left: 2px solid  #C3CFD9; */
+    /* border-right: 2px solid  #C3CFD9; */
 }
 .result .chartBarContainer p{
+    color: #757575;
+    font-size: 13px;
     position: absolute;
-    top: -28px;
+    top: -20px;
     left: 50%;
-    transform: translateX(-50%)
+    transform: translateX(-50%);
+}
+.result .jobValue .category{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 8px;
+}
+.result .jobValue .category p{
+    width: 70px;
+    margin: 0 20px;
+    word-break: keep-all;
 }
 .result .relativeJob{
     margin-top: 40px;
 }
 .result .jobInfo{
-    margin-top: 20px;
+    margin-top: 40px;
 }
 .result table .job-th-1{
     width: 86px;
