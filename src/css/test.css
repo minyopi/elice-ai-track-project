@@ -25,6 +25,7 @@
     padding: 0 20px;
     background-color:#e0e0e0;
     box-sizing: border-box;
+    position: relative;
 }
 .test .question{
     height: 200px;
@@ -57,16 +58,18 @@
 }
 .test .btnBox {
     display: flex;
-    /* border: 2px solid red; */
+    margin-top: 52px;
+    margin-bottom: 120px;
+    position: relative;
 }
 .test .btn{
     display: inline-flex;
     width: 160px;
     height: 48px;
     font-size: 20px;
-    margin-top: 52px;
-    margin-bottom: 120px;
 }
 .test .btn.right{
-    margin-left: 656px;
+    position: absolute;
+    top: 0;
+    right: 0;
 }

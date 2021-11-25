@@ -6,6 +6,15 @@ import { UserContext } from "../store/user";
 const BasicLink = styled(Link)`
   text-decoration: none;
 `;
+const ChartBar = styled.div`
+  width: 100%;
+  height: ${props => props.num*15}%;
+  background-color: #B2ACFA;
+  // border: 2px solid blue;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+`;
 
 export function Result() {
   const context = useContext(UserContext);
@@ -61,7 +70,6 @@ export function Result() {
       }
       async function loadJobInfo(){
         try {
-          console.log(maxNum1,maxNum2);
           const response3 = await axios.get(`https://inspct.career.go.kr/inspct/api/psycho/value/jobs?no1=${maxNum1}&no2=${maxNum2}`);
           setJobInfo(response3['data'])
         } catch (e) {
@@ -269,8 +277,24 @@ export function Result() {
   function ShowChart(){
     const wonScore = jsonData.result['wonScore'];
     const wonScoreList = [];
-    const wonScoreData = wonScore.split(" ").map((item)=>{return item.split("=")[1]}).forEach((item)=>{wonScoreList.push(<span>{item}</span>)});
-    return wonScoreList;
+    const wonScoreData = wonScore
+      .split(" ")
+      .map((item)=>{return item.split("=")[1]})
+      .forEach((item)=>{wonScoreList.push(item)})
+    return (
+      <div className="chartBarContainer">
+        { wonScoreList.map((item) => { 
+          if (item !== undefined) {
+            return(
+            <div className="barContainer">
+              <ChartBar num={parseInt(item)}>
+                <p>{item}</p>
+              </ChartBar>
+            </div>
+          )}
+          }) }
+      </div>
+      );
   }
 
   return (

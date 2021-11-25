@@ -12,6 +12,19 @@ const IsActivateLink = styled(Link)`
 const BasicLink = styled(Link)`
   text-decoration: none;
 `;
+const StyledCountBar = styled.div`
+  ::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: ${props => props.percentage}%;
+    height: 16px;
+    border-radius: 10px;
+    background: #19AE9F;
+    transition: all 0.3s linear;
+  }
+`;
 
 export function Test(props) {
   // context 사용하기 위해 가져오기
@@ -169,7 +182,7 @@ export function Test(props) {
               <h2>검사 진행</h2>
               <h3 className="countPer">{countPer}%</h3>
             </div>
-            <div className="countBar"></div>
+            <StyledCountBar className="countBar" percentage={countPer}></StyledCountBar>
             {saveData && saveData.length > 0 ? 
             <ShowQuestions />
              : undefined}
