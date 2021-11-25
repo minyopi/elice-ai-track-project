@@ -37,15 +37,22 @@
 }
 .setUser form .gender{
     /* border: 1px solid blue; */
-    margin-top: 20px;
+    margin-top: 40px;
+    font-size: 18px;
 }
 .setUser form .gender label input{
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 .setUser .startBtn{
-    margin-top: 20px;
+    margin-top: 36px;
     text-align: center;
+}
+.setUser .startBtn button{
+    width: 120px;
+    height: 40px;
+    font-size: 18px;
+
 }
 .setUser .startBtn .btn{
     display: inline-flex;

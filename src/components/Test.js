@@ -4,19 +4,23 @@ import { useParams, Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { UserContext } from "../store/user";
 
-const StyledLink = styled(Link)`
-    opacity: ${(props) => (props.isActive ? "1" : "0.6")};
-    cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
-    text-decoration: none;
-  `;
+const IsActivateLink = styled(Link)`
+  opacity: ${(props) => (props.isActive ? "1" : "0.6")};
+  cursor: ${(props) => (props.isActive ? "pointer" : "not-allowed")};
+  text-decoration: none;
+`;
+const BasicLink = styled(Link)`
+  text-decoration: none;
+`;
 
 export function Test(props) {
   // context 사용하기 위해 가져오기
   const context = useContext(UserContext);
-
   // 문항 불러와서 saveData에 저장하기
   const [saveData, setSaveData] = useState([]);
-  
+  // 값을 선택하지 않으면 비활성화
+  const [isActive, setIsActive] = useState(false);
+
   useEffect(() => {
     async function loadQuestion() {
       try {
@@ -40,6 +44,7 @@ export function Test(props) {
   }
   const [ inputs, setInputs ] = useState(inputsInitial);
   const [ countPer, setCountPer ] = useState(0)
+
   function handleChange(e){
     const { value, name } = e.target;
     setInputs((cur) => {
@@ -47,11 +52,6 @@ export function Test(props) {
       newSetInputs[name]= value;
       return newSetInputs;
     });
-    setAnswers((cur) => {
-      let newAnswers = [...cur];
-      newAnswers.push(value);
-      return newAnswers
-    })
   }
   const inputsForPost = []
   useEffect(() => {
@@ -71,82 +71,90 @@ export function Test(props) {
   let page_count = 1;
   let question_count = 0;
   
-  const questions = saveData.filter(() => {
+  const questions = saveData.filter((item) => {
     question_count += 1;
     if ( question_count === 1) page_count = 1;
-    else if (question_count % 5 === 1) page_count += 1;
+    else if (question_count % 5 === 1) {
+      page_count += 1;
+    }
     return page === page_count;
   });
   
   // 문항 만드는 템플릿 컴포넌트
-  const [answers, setAnswers] = useState([])
-  const memoAnswer = useMemo(() => { return answers.length }, [ answers ])
-
   const ShowQuestions = () => {
-    const show = questions.map((item, idx)=>{
-    return (
+    const show = questions.map((item)=>{
+      return (
         <>
-          <h3>{item.qitemNo}. {item.question}</h3>
-          <form>
-              <label><input type="radio" name={'B'+String(idx + 1)} onChange={handleChange} value={item.answerScore01} checked={inputs['B'+String(idx + 1)] === item.answerScore01 ? true : false } />{item.answer01}</label>
-              <label><input type="radio" name={'B'+String(idx + 1)} onChange={handleChange} value={item.answerScore02} checked={inputs['B'+String(idx + 1)] === item.answerScore02 ? true : false } />{item.answer02}</label>
-          </form>
+          <div className="question">
+            <div className="text">
+              <h3 className="q">{item.qitemNo}. {item.question}</h3>
+              <form className="testInput">
+                <label><input type="radio" name={'B'+String(item.qitemNo)} onChange={handleChange} value={item.answerScore01} checked={inputs['B'+String(item.qitemNo)] === item.answerScore01 ? true : false } />{item.answer01}</label>
+                <label><input type="radio" name={'B'+String(item.qitemNo)} onChange={handleChange} value={item.answerScore02} checked={inputs['B'+String(item.qitemNo)] === item.answerScore02 ? true : false } />{item.answer02}</label>
+              </form>
+            </div>
+          </div>
         </>)
       })
-    return show;
-  }
-
- 
-  // 값을 선택하지 않으면 비활성화
-  const [isActive, setIsActive] = useState(false);
-  
-  // isActive 관리를 어떻게 해줄건지.?????? 하
-  useEffect(() => {
-    if (memoAnswer === 0) setIsActive(false)
-    else if (memoAnswer > 1) setIsActive(true);
-  }, [ memoAnswer ])
-
-
-  // 이전, 다음 버튼 설정해주는 컴포넌트
+      return show;
+    }
+    
+    
+    // isActive 관리를 어떻게 해줄건지
+    useEffect(() => {
+      let checkInput = questions.map((item) => {
+        return `B${item['qitemNo']}`
+      });
+      let checkPage = checkInput.map((item) => {
+        if (inputs[item] === "" || inputs[item] === undefined) return false
+        else return true
+      });
+      console.log(checkPage)
+      if ( checkPage.indexOf(false) > -1 || checkPage.length === 0) setIsActive(false)
+      else if (checkPage.indexOf(false) === -1) setIsActive(true)
+    }, [ inputs ])
+    
+    
+    // 이전, 다음 버튼 설정해주는 컴포넌트
   function SetButton(){
     let page_num = Number(page)
     if ( page_num === 1 ){
       return(
         <>
-        <Link to={'/testExample'}><button className="btn">이전</button></Link>
+        <BasicLink to={'/testExample'}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
         { !isActive ?
-        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
-          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
-        </StyledLink> :
-        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive}>
-        <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
-        </StyledLink> }   
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+          <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </IsActivateLink> :
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={() => {setIsActive(false)}} >
+        <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </IsActivateLink> }   
         </>
         )
       } else if (page_num === 6){
         return(
           <>
-          <Link to={'/test/'+ (page_num-1)}><button className="btn">이전</button></Link>
+          <BasicLink to={'/test/'+ (page_num-1)}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
           { !isActive ?
-          <StyledLink to={'/finishTest'} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
-            <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
-          </StyledLink> :
-          <StyledLink to={'/finishTest'} isActive={isActive}>
-          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
-          </StyledLink> }
+          <IsActivateLink to={'/finishTest'} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+            <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
+          </IsActivateLink> :
+          <IsActivateLink to={'/finishTest'} isActive={isActive}>
+          <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
+          </IsActivateLink> }
           </>
         )
       }
     return(
       <>
-        <Link to={'/test/'+ (page_num-1)}><button className="btn">이전</button></Link>
+        <BasicLink to={'/test/'+ (page_num-1)}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
         { !isActive ?
-        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
-          <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
-        </StyledLink> :
-        <StyledLink to={'/test/'+ (page_num+1)} isActive={isActive}>
-        <button className={"btn " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
-        </StyledLink> }
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
+          <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </IsActivateLink> :
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={() => {setIsActive(false)}}>
+        <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
+        </IsActivateLink> }
       </>
     )
   }
@@ -154,13 +162,24 @@ export function Test(props) {
 
   return (
     <>
-      <h2>검사 진행</h2>
-      <h3>{countPer}%</h3>
-      {saveData && saveData.length > 0 ? 
-      <ShowQuestions />
-       : undefined}
-      <br />
-      <SetButton></SetButton>
+      <section className="test">
+        <div className="inner">
+          <div className="content">
+            <div className="title">
+              <h2>검사 진행</h2>
+              <h3 className="countPer">{countPer}%</h3>
+            </div>
+            <div className="countBar"></div>
+            {saveData && saveData.length > 0 ? 
+            <ShowQuestions />
+             : undefined}
+            <br />
+            <div className="btnBox">
+              <SetButton></SetButton>
+            </div>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

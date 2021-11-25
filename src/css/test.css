@@ -1,70 +1,72 @@
 .inner{
     /* border: 2px solid orange; */
 }
-.testExample .content{
+.test .content{
     /* border: 2px solid blue; */
     margin: 50px auto;
 }
-.testExample .title {
+.test .title {
     display: flex;
 }
-.testExample h2 {
+.test h2 {
+    width: 150px;
     font-weight: bold;
     font-size: 32px;
-    margin-right: 800px;
+    margin-right: 750px;
 }
-.testExample .countPer{
+.test .countPer{
     font-weight: bold;
-    font-size: 24px;
+    font-size: 28px;
 }
-.testExample .countBar{
+.test .countBar{
     height: 16px;
-    margin-top: 52px;
+    margin-top: 44px;
     border-radius: 10px;
     padding: 0 20px;
     background-color:#e0e0e0;
     box-sizing: border-box;
 }
-.testExample p{
-    margin-top: 52px;
-    font-size: 20px;
-    line-height: 1.5;
-}
-.testExample .question{
+.test .question{
     height: 200px;
     margin-top: 52px;
     background-color: #B2ACFA;
     border: 2px solid#6B5EF5;
 }
-.testExample .question .text{
-    width: 500px;
+.test .question .text{
+    width: 800px;
     margin: 0 auto;
     padding-top: 50px;
 }
-.testExample .q{
+.test .q{
     font-weight: bold;
     font-size: 22px;
     color: #fff;
     text-align: center;
 }
-.testExample .question .example{
+.test .question .testInput{
     margin-top: 48px;
     text-align: center;
 }
-.testExample .question label{
+.test .question label{
     font-size: 20px;
     margin: 0 40px;
     cursor: pointer;
 }
-.testExample .question input {
-    margin-right: 8px;
+.test .question input {
+    margin-right: 10px;
 }
-.testExample .btn{
+.test .btnBox {
+    display: flex;
+    /* border: 2px solid red; */
+}
+.test .btn{
     display: inline-flex;
     width: 160px;
     height: 48px;
     font-size: 20px;
     margin-top: 52px;
-    margin-left: 400px;
+    margin-bottom: 120px;
 }
-
+.test .btn.right{
+    margin-left: 656px;
+}
