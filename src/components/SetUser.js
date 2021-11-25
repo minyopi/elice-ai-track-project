@@ -26,7 +26,7 @@ export function SetUser() {
   };
 
   useEffect(() => {
-    if ( username !== "" && username !== undefined && gender !== undefined) setIsActive(true)
+    if ( username !== "" && username !== undefined && gender !== undefined && gender !== "") setIsActive(true)
     else setIsActive(false)
     context['name'] = username;
     context['gender'] = gender;
@@ -64,7 +64,7 @@ export function SetUser() {
                 <label><input type="radio" name="gender" value="100323" onChange={getGender} checked={ gender === "100323" ? true : false } />남자</label>
                 <br />
                 <label><input type="radio" name="gender" value="100324" onChange={getGender} checked={ gender === "100324" ? true : false } />여자</label>
-              </div>  
+              </div>
               <br />
               <div className="startBtn">
                 <ActiveBtn name="검사 시작" to='./TestExample' isActive={isActive}></ActiveBtn>

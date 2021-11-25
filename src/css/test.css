@@ -1,0 +1,75 @@
+.inner{
+    /* border: 2px solid orange; */
+}
+.test .content{
+    /* border: 2px solid blue; */
+    margin: 50px auto;
+}
+.test .title {
+    display: flex;
+}
+.test h2 {
+    width: 150px;
+    font-weight: bold;
+    font-size: 32px;
+    margin-right: 750px;
+}
+.test .countPer{
+    font-weight: bold;
+    font-size: 28px;
+}
+.test .countBar{
+    height: 16px;
+    margin-top: 44px;
+    border-radius: 10px;
+    padding: 0 20px;
+    background-color:#e0e0e0;
+    box-sizing: border-box;
+    position: relative;
+}
+.test .question{
+    height: 200px;
+    margin-top: 52px;
+    background-color: #B2ACFA;
+    border: 2px solid#6B5EF5;
+}
+.test .question .text{
+    width: 800px;
+    margin: 0 auto;
+    padding-top: 50px;
+}
+.test .q{
+    font-weight: bold;
+    font-size: 22px;
+    color: #fff;
+    text-align: center;
+}
+.test .question .testInput{
+    margin-top: 48px;
+    text-align: center;
+}
+.test .question label{
+    font-size: 20px;
+    margin: 0 40px;
+    cursor: pointer;
+}
+.test .question input {
+    margin-right: 10px;
+}
+.test .btnBox {
+    display: flex;
+    margin-top: 52px;
+    margin-bottom: 120px;
+    position: relative;
+}
+.test .btn{
+    display: inline-flex;
+    width: 160px;
+    height: 48px;
+    font-size: 20px;
+}
+.test .btn.right{
+    position: absolute;
+    top: 0;
+    right: 0;
+}
