@@ -1,0 +1,31 @@
+.finish{
+    text-align: center;
+}
+.finish .inner{
+    /* border: 2px solid red; */
+}
+.finish h1{
+    color: #6B5EF5;
+    font-size: 32px;
+    font-weight: bold;
+    margin-top: 160px;
+    /* border: 2px solid blue; */
+}
+.finish p{
+    font-size: 18px;
+    margin-top: 40px;
+    line-height: 1.7;
+    font-weight: bold;
+    /* border: 2px solid orange; */
+}
+.finish .goResult{
+    margin-top: 140px;
+    /* border: 2px solid blue; */
+}
+.finish .btn{
+    display: inline-flex;
+    text-align: center;
+    width: 120px;
+    height: 44px;
+    font-size: 18px;
+}

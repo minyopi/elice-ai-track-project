@@ -1,0 +1,82 @@
+.result .inner{
+    /* border: 2px solid red; */
+}
+.result .inner .title{
+    text-align: center;
+    margin-bottom: 40px;
+}
+.result .title h1{
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 100px;
+}
+.result .title .h1Border {
+    display: inline-block;
+    background-color: #9EADBA;
+    width: 360px;
+    height: 3px;
+    margin-top: 16px;
+}
+.result .title p{
+    font-size: 18px;
+    margin-top: 64px;
+    line-height: 1.5;
+    text-align: left;
+    word-break: keep-all;
+}
+table{
+    border: 2px solid #C3CFD9;
+    width: 100%;
+    line-height: 1.2;
+    font-size: 17px;
+}
+th, td{
+    border: 2px solid #C3CFD9;
+    padding: 16px;
+    vertical-align: middle;
+}
+th{
+    font-weight: bold;
+}
+.result h2{
+    font-size: 28px;
+    font-weight: bold;
+}
+.result h3{
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 22px;
+    text-align: center;
+    background-color: #DFE6ED;
+    padding: 24px;
+}
+.result .jobValue{
+    margin-top: 40px;
+    border: 2px solid orange;
+}
+.result .relativeJob{
+    margin-top: 40px;
+}
+.result .jobInfo{
+    margin-top: 20px;
+}
+.result table .job-th-1{
+    width: 86px;
+}
+.result .majorInfo{
+    margin-top: 60px;
+}
+.result table .major-th-1{
+    width: 120px;
+}
+.result .btnBox{
+    margin-top: 80px;
+    text-align: center;
+}
+.result .btn{
+    display: inline-block;
+    width: 140px;
+    height: 44px;
+    font-size: 17px;
+    margin-bottom: 120px;
+}
