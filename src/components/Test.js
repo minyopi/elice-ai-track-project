@@ -125,7 +125,7 @@ export function Test(props) {
       console.log(checkPage)
       if ( checkPage.indexOf(false) > -1 || checkPage.length === 0) setIsActive(false)
       else if (checkPage.indexOf(false) === -1) setIsActive(true)
-    }, [ inputs ])
+    }, [ inputs, questions ])
     
     
     // 이전, 다음 버튼 설정해주는 컴포넌트
@@ -134,12 +134,12 @@ export function Test(props) {
     if ( page_num === 1 ){
       return(
         <>
-        <BasicLink to={'/testExample'}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
+        <BasicLink to={'/testExample'}><button className="btn">이전</button></BasicLink>
         { !isActive ?
         <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> :
-        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={() => {setIsActive(false)}} >
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} >
         <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> }   
         </>
@@ -147,7 +147,7 @@ export function Test(props) {
       } else if (page_num === 6){
         return(
           <>
-          <BasicLink to={'/test/'+ (page_num-1)}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
+          <BasicLink to={'/test/'+ (page_num-1)}><button className="btn" >이전</button></BasicLink>
           { !isActive ?
           <IsActivateLink to={'/finishTest'} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
             <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>완료</button>
@@ -160,12 +160,12 @@ export function Test(props) {
       }
     return(
       <>
-        <BasicLink to={'/test/'+ (page_num-1)}><button className="btn" onClick={() => {setIsActive(true)}}>이전</button></BasicLink>
+        <BasicLink to={'/test/'+ (page_num-1)}><button className="btn">이전</button></BasicLink>
         { !isActive ?
         <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> :
-        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={() => {setIsActive(false)}}>
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive}>
         <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> }
       </>
