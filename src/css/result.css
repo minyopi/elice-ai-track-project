@@ -52,7 +52,27 @@ th{
 }
 .result .jobValue{
     margin-top: 40px;
-    border: 2px solid orange;
+    /* border: 2px solid orange; */
+}
+.result .chartBarContainer{
+    border: 2px solid  #C3CFD9;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin-top: 40px;
+}
+.result .chartBarContainer .barContainer{
+    /* border: 2px solid red; */
+    position: relative;
+    width: 70px;
+    margin: 0 20px;
+}
+.result .chartBarContainer p{
+    position: absolute;
+    top: -28px;
+    left: 50%;
+    transform: translateX(-50%)
 }
 .result .relativeJob{
     margin-top: 40px;
