@@ -122,10 +122,16 @@ export function Test(props) {
         if (inputs[item] === "" || inputs[item] === undefined) return false
         else return true
       });
-      console.log(checkPage)
       if ( checkPage.indexOf(false) > -1 || checkPage.length === 0) setIsActive(false)
       else if (checkPage.indexOf(false) === -1) setIsActive(true)
     }, [ inputs, questions ])
+
+
+    // 다음 버튼 누르면 스크린 이동시키는 함수
+    function handleScroll(){
+      var location = document.querySelector("body").offsetTop;
+      window.scrollTo({top:location, behavior:'auto'});
+    }
     
     
     // 이전, 다음 버튼 설정해주는 컴포넌트
@@ -139,7 +145,7 @@ export function Test(props) {
         <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> :
-        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} >
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={handleScroll}>
         <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> }   
         </>
@@ -165,7 +171,7 @@ export function Test(props) {
         <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={(e) => {e.preventDefault(); }}>
           <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> :
-        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive}>
+        <IsActivateLink to={'/test/'+ (page_num+1)} isActive={isActive} onClick={handleScroll}>
         <button className={"btn right " + ( isActive ? "activeBtn" : "disabledBtn" )}>다음</button>
         </IsActivateLink> }
       </>
