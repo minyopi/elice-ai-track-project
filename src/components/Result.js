@@ -268,7 +268,7 @@ export function Result() {
       .map((item)=>{return item.split("=")[1]})
       .forEach((item)=>{wonScoreList.push(item)})
     return (
-      <div className="chartBarContainer">
+      <>
         { wonScoreList.map((item) => { 
           if (item !== undefined) {
             return(
@@ -279,7 +279,7 @@ export function Result() {
             </div>
           )}
           }) }
-      </div>
+      </>
       );
   }
 
@@ -306,7 +306,22 @@ export function Result() {
           </table>
           <div className="jobValue">
             <h2>직업가치관 결과</h2>
-            <ShowChart />
+            <div className="chartInner">
+              <table className="chartBg">
+                <th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>              </table>
+              <div className="chartBarContainer">
+                <ShowChart />
+              </div>
+            </div>
             <div className="category">
               <p>능력발휘</p>
               <p>자율성</p>
