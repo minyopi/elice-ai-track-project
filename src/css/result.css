@@ -53,20 +53,29 @@ th{
 .result .jobValue{
     margin-top: 40px;
 }
+.result .chartInner{
+    position: relative;
+    margin-top: 40px;
+}
+.result .chartBg{
+    height: 400px;
+}
 .result .chartBarContainer{
-    border: 2px solid  #C3CFD9;
+    /* border: 2px solid  #C3CFD9; */
     height: 400px;
     display: flex;
     justify-content: center;
     text-align: center;
     margin-top: 40px;
-    position: relative;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     box-sizing: border-box;
 }
 .result .chartBarContainer .barContainer{
     position: relative;
     width: 70px;
-    margin: 0 20px;
+    margin: 0 26.2px;
     /* border-left: 2px solid  #C3CFD9; */
     /* border-right: 2px solid  #C3CFD9; */
 }
@@ -86,7 +95,7 @@ th{
 }
 .result .jobValue .category p{
     width: 70px;
-    margin: 0 20px;
+    margin: 0 26.2px;
     word-break: keep-all;
 }
 .result .relativeJob{
