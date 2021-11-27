@@ -282,7 +282,7 @@ export function Result() {
       </>
       );
   }
-
+  
   return (
     <>
       <section className="result">
@@ -345,7 +345,14 @@ export function Result() {
             </div>
           </div>
           <div className="btnBox">
-            <BasicLink to='/'><button className="btn">다시 검사하기</button></BasicLink>
+            <BasicLink to='/' 
+              onClick={()=>{
+                context['name'] = "";
+                context['gender'] = "";
+                context['answers'] = "";
+              }}
+              ><button className="btn">다시 검사하기</button>
+            </BasicLink>
           </div>
         </div>
       </section>
