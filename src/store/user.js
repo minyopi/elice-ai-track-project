@@ -1,4 +1,5 @@
 import React, { createContext } from "react";
+import apikey from 'key.js'
 
 // user 정보를 담을 context를 만드는 곳
 
@@ -6,7 +7,7 @@ export const UserContext = createContext();
 
 const UserStore = (props) => {
     const users = {
-        "apikey" : "43c8e52955dbc4c8d2b69e98c6d641f2",
+        "apikey" : apikey,
         "qestrnSeq" : "6",
         "trgetSe" : "100209",
         "name": "",
