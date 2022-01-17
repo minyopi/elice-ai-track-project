@@ -1,5 +1,5 @@
 import React, { createContext } from "react";
-import apikey from 'key.js'
+import{ apikey }from './key'
 
 // user 정보를 담을 context를 만드는 곳
 
