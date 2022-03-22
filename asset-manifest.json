@@ -1,0 +1,20 @@
+{
+  "files": {
+    "main.css": "/elice-ai-track-project/static/css/main.51801e5f.chunk.css",
+    "main.js": "/elice-ai-track-project/static/js/main.8158e1fd.chunk.js",
+    "main.js.map": "/elice-ai-track-project/static/js/main.8158e1fd.chunk.js.map",
+    "runtime-main.js": "/elice-ai-track-project/static/js/runtime-main.94694774.js",
+    "runtime-main.js.map": "/elice-ai-track-project/static/js/runtime-main.94694774.js.map",
+    "static/js/2.8f638c1a.chunk.js": "/elice-ai-track-project/static/js/2.8f638c1a.chunk.js",
+    "static/js/2.8f638c1a.chunk.js.map": "/elice-ai-track-project/static/js/2.8f638c1a.chunk.js.map",
+    "index.html": "/elice-ai-track-project/index.html",
+    "static/css/main.51801e5f.chunk.css.map": "/elice-ai-track-project/static/css/main.51801e5f.chunk.css.map",
+    "static/js/2.8f638c1a.chunk.js.LICENSE.txt": "/elice-ai-track-project/static/js/2.8f638c1a.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.94694774.js",
+    "static/js/2.8f638c1a.chunk.js",
+    "static/css/main.51801e5f.chunk.css",
+    "static/js/main.8158e1fd.chunk.js"
+  ]
+}
